@@ -1,6 +1,7 @@
 # LC_prototype
 
- A source code used in mobile shooter prototype, "Legendary Commando".
+ C# scripts used in prototype of mobile shooter, "Legendary Commando". Result of 2019 summer internship at Softpump.
+
 
 # Screenshots
 

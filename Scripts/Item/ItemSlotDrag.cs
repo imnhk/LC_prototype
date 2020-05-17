@@ -25,10 +25,8 @@ public class ItemSlotDrag : IconSlot, IComparer<IconSlot>
     {
         if (this.targetSlots.Count > 0)
         {
-            // 나랑 충돌되어 Drop될 Slot List를 나랑 제일 가까운 놈순으로 정렬
+            // 가장 위에 있는 아이템을 찾기 위해 정렬
             this.targetSlots.Sort(this);
-
-            // 위에서 Sort했기 때문에 0 번에있는 놈이 나랑 제일 가까운 놈이다....
             this.targetSlot = this.targetSlots[0];
         }
         else
@@ -37,28 +35,22 @@ public class ItemSlotDrag : IconSlot, IComparer<IconSlot>
         }
     }
 
-    // 아이템을 집다.
+    // 아이템을 집는다
     public void Catch(IconSlot itemSlot, Vector2 screenPos)
     {
         this.gameObject.SetActive(true);
 
-        // 집은 놈 기억
         this.catchSlot = itemSlot;
-
-        // 집은 아이템 정보로 셋팅
         this.SetItem(itemSlot.GetItem());
 
         // 집은 놈은 해제
         itemSlot.SetItem(null);
 
-        // 나를 제일 마지막에 그리게
+        // 가장 앞으로 이동
         this.transform.SetAsLastSibling();
-
-        // 이벤트 위치로..
         this.transform.position = new Vector3(screenPos.x, screenPos.y, 0.0f);
     }
 
-    // 집은 아이템 Drag
     public void DragMove(Vector2 screenPos)
     {
         this.transform.position = new Vector3(
@@ -67,27 +59,27 @@ public class ItemSlotDrag : IconSlot, IComparer<IconSlot>
            0.0f);
     }
 
-    // 집은 아이템 놓는다.
+    // 아이템을 놓는다
     public void Drop()
     {        
-        if (this.targetSlot == null) // 집으로 돌아간다.
+        // slot이 아닌 곳에 놓았을 때
+        if (this.targetSlot == null)
         {
             this.catchSlot.SetItem(this.GetItem());
         }
-        else // 들어가야할 위치가 있다..
+        else
         {
             Item targetItem = this.targetSlot.GetItem();
 
-            // 들어가야 할곳이 비어있다면...
+            // slot이 비어 있음
             if (targetItem == null)
             {
                 this.targetSlot.SetItem(this.GetItem());
             }
 
-            // 들어가야할 곳이 비어있지 않다면...
+            // slot이 비어있지 않음. swap
             else
             {
-                //Swap
                 this.catchSlot.SetItem(targetItem);
                 this.targetSlot.SetItem(this.GetItem());
             }
@@ -121,11 +113,10 @@ public class ItemSlotDrag : IconSlot, IComparer<IconSlot>
         }
     }
 
+    // slot 거리 비교
     public int Compare(IconSlot x, IconSlot y)
     {
-        //x 가 가깝다면 -1
-        //y 가 가깝다면 1
-        //같다면 0
+
         float distX = Vector3.Distance(x.transform.position, this.transform.position);
         float distY = Vector3.Distance(y.transform.position, this.transform.position);
 

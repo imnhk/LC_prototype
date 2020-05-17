@@ -27,11 +27,4 @@ public class ItemGenerator : PumpFramework.Common.Singleton<ItemGenerator>
             item.transform.parent = this.transform;
         }
     }
-
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
 }

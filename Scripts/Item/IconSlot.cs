@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-// Regex.Match
+    
 using System.Text.RegularExpressions;
 
 public class IconSlot : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler

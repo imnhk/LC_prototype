@@ -9,7 +9,7 @@ public class Item
     ItemInfo itemInfo;
 
     public ItemType type;
-    public Sprite icon;         // 아이템 아이콘
+    public Sprite icon;
     public int level;
     public int key;
 
@@ -30,7 +30,6 @@ public class Item
 
 public class ItemDatabase : PumpFramework.Common.Singleton<ItemDatabase>
 {
-    /* Container*/
     private List<Item> inventory = new List<Item>();
     public Sprite[] icons;
     private IconSlot[] iconSlots;
@@ -50,7 +49,7 @@ public class ItemDatabase : PumpFramework.Common.Singleton<ItemDatabase>
 
     private void Start()
     {
-        // 임시 아이템 데이터 베이스 추가        
+        // 테스트용 임시 추가        
         inventory.Add(new Item(ItemType.Weapon, 0, 1, this.icons[0]));
         inventory.Add(new Item(ItemType.Weapon, 0, 2, this.icons[1]));
         UpdateSlots();
@@ -67,10 +66,11 @@ public class ItemDatabase : PumpFramework.Common.Singleton<ItemDatabase>
             return;
         }
 
+        // 같은 아이템 둘을 선택했을 시 레벨업 가능
         if (item1.key == item2.key && item1.level == item2.level)
         {
             Debug.Log("Upgrade!");
-            // 레벨에 따라 아이콘이 바뀌도록 함(임시)
+            // 레벨에 따라 아이콘 변경(임시)
             item1.level += 1;
             item1.icon = icons[35 + item1.level];
 
@@ -127,15 +127,12 @@ public class ItemDatabase : PumpFramework.Common.Singleton<ItemDatabase>
         }
     }
 
-    /* Method */
-    // Insert
     public void Add(Item item)
     {
         inventory.Add(item);
         UpdateSlots();
     }
 
-    // Delete
     public void Delete(Item item)
     {
         if (inventory.Contains(item))
@@ -146,11 +143,6 @@ public class ItemDatabase : PumpFramework.Common.Singleton<ItemDatabase>
         else
             Debug.LogError($"items don't have item: {item}");
     }
-
-    // Update
-    
-    // Select
-    // Sort
 
     public void ShowInventory()
     {

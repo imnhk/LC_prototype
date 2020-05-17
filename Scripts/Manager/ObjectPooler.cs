@@ -10,8 +10,10 @@ public class ObjectToPool
         get
         {
             for (int i = 0; i < amount; i++)
+            {
                 if (!pool[i].activeInHierarchy)
                     return pool[i];
+            }
 
             Debug.LogError("Object pool is full");
             return null;
